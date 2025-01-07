@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8bebff0a00fe4560ae43f73a62463743" Name="Diagram1">
+        <EntityTypeShape EntityType="dbo.LibraryOtomasyonModel.sysdiagrams" Width="1.5" PointX="8" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbo.LibraryOtomasyonModel.TBL_KAYNAKLAR" Width="1.5" PointX="1.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbo.LibraryOtomasyonModel.TBL_ODUNC" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbo.LibraryOtomasyonModel.TBL_PERSONELLER" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbo.LibraryOtomasyonModel.TBL_UYELER" Width="1.5" PointX="3.5" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="dbo.LibraryOtomasyonModel.FK_TBL_ODUNC_TBL_KAYNAKLAR" ManuallyRouted="false" />
+        <AssociationConnector Association="dbo.LibraryOtomasyonModel.FK_TBL_ODUNC_TBL_UYELER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

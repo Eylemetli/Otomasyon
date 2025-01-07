@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbo.LibraryOtomasyonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TBL_KAYNAKLAR">
+          <Key>
+            <PropertyRef Name="kaynak_id" />
+          </Key>
+          <Property Name="kaynak_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kaynak_isbn" Type="nchar" MaxLength="20" />
+          <Property Name="kaynak_ad" Type="nvarchar" MaxLength="255" />
+          <Property Name="kaynak_yazar" Type="nvarchar" MaxLength="255" />
+          <Property Name="kaynak_yayinevi" Type="nvarchar" MaxLength="255" />
+          <Property Name="kaynak_basımtarihi" Type="int" />
+          <Property Name="kaynak_sayfa" Type="int" />
+          <Property Name="kaynak_tur" Type="nchar" MaxLength="50" />
+          <Property Name="kaynak_ulke" Type="nchar" MaxLength="60" />
+          <Property Name="kaynak_dil" Type="nchar" MaxLength="50" />
+          <Property Name="kaynak_adet" Type="int" />
+          <Property Name="kaynak_raf" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TBL_ODUNC">
+          <Key>
+            <PropertyRef Name="odunc_id" />
+          </Key>
+          <Property Name="odunc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kitap_id" Type="int" />
+          <Property Name="kullanici_id" Type="int" />
+          <Property Name="alis_tarih" Type="datetime" />
+          <Property Name="veris_tarih" Type="datetime" />
+          <Property Name="durm" Type="bit" />
+        </EntityType>
+        <EntityType Name="TBL_PERSONELLER">
+          <Key>
+            <PropertyRef Name="personel_id" />
+          </Key>
+          <Property Name="personel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="personel_ad" Type="nchar" MaxLength="50" />
+          <Property Name="personel_soyad" Type="nchar" MaxLength="50" />
+          <Property Name="personel_TC" Type="nchar" MaxLength="11" />
+          <Property Name="personel_tel" Type="nchar" MaxLength="11" />
+          <Property Name="personel_mail" Type="nchar" MaxLength="50" />
+          <Property Name="personel_kullanıciad" Type="nchar" MaxLength="50" />
+          <Property Name="personel_sifre" Type="nchar" MaxLength="50" />
+          <Property Name="personel_foto" Type="varchar" MaxLength="500" />
+          <Property Name="personel_adres" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL_UYELER">
+          <Key>
+            <PropertyRef Name="uye_id" />
+          </Key>
+          <Property Name="uye_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uye_ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="uye_soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="uye_TC" Type="nvarchar" MaxLength="11" />
+          <Property Name="uye_tel" Type="nvarchar" MaxLength="10" />
+          <Property Name="uye_mail" Type="nvarchar" MaxLength="50" />
+          <Property Name="uye_adres" Type="nvarchar" MaxLength="50" />
+          <Property Name="uye_ceza" Type="float" />
+          <Property Name="uye_cinsiyet" Type="char" MaxLength="1" />
+          <Property Name="uye_dTarihi" Type="char" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_TBL_ODUNC_TBL_KAYNAKLAR">
+          <End Role="TBL_KAYNAKLAR" Type="Self.TBL_KAYNAKLAR" Multiplicity="0..1" />
+          <End Role="TBL_ODUNC" Type="Self.TBL_ODUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_KAYNAKLAR">
+              <PropertyRef Name="kaynak_id" />
+            </Principal>
+            <Dependent Role="TBL_ODUNC">
+              <PropertyRef Name="kitap_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_ODUNC_TBL_UYELER">
+          <End Role="TBL_UYELER" Type="Self.TBL_UYELER" Multiplicity="0..1" />
+          <End Role="TBL_ODUNC" Type="Self.TBL_ODUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UYELER">
+              <PropertyRef Name="uye_id" />
+            </Principal>
+            <Dependent Role="TBL_ODUNC">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dboLibraryOtomasyonModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_KAYNAKLAR" EntityType="Self.TBL_KAYNAKLAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_ODUNC" EntityType="Self.TBL_ODUNC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_PERSONELLER" EntityType="Self.TBL_PERSONELLER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_UYELER" EntityType="Self.TBL_UYELER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBL_ODUNC_TBL_KAYNAKLAR" Association="Self.FK_TBL_ODUNC_TBL_KAYNAKLAR">
+            <End Role="TBL_KAYNAKLAR" EntitySet="TBL_KAYNAKLAR" />
+            <End Role="TBL_ODUNC" EntitySet="TBL_ODUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_ODUNC_TBL_UYELER" Association="Self.FK_TBL_ODUNC_TBL_UYELER">
+            <End Role="TBL_UYELER" EntitySet="TBL_UYELER" />
+            <End Role="TBL_ODUNC" EntitySet="TBL_ODUNC" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbo.LibraryOtomasyonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TBL_KAYNAKLAR">
+          <Key>
+            <PropertyRef Name="kaynak_id" />
+          </Key>
+          <Property Name="kaynak_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kaynak_isbn" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="kaynak_ad" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="kaynak_yazar" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="kaynak_yayinevi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="kaynak_basımtarihi" Type="Int32" />
+          <Property Name="kaynak_sayfa" Type="Int32" />
+          <Property Name="kaynak_tur" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="kaynak_ulke" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <Property Name="kaynak_dil" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="kaynak_adet" Type="Int32" />
+          <Property Name="kaynak_raf" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_ODUNC" Relationship="Self.FK_TBL_ODUNC_TBL_KAYNAKLAR" FromRole="TBL_KAYNAKLAR" ToRole="TBL_ODUNC" />
+        </EntityType>
+        <EntityType Name="TBL_ODUNC">
+          <Key>
+            <PropertyRef Name="odunc_id" />
+          </Key>
+          <Property Name="odunc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kitap_id" Type="Int32" />
+          <Property Name="kullanici_id" Type="Int32" />
+          <Property Name="alis_tarih" Type="DateTime" Precision="3" />
+          <Property Name="veris_tarih" Type="DateTime" Precision="3" />
+          <Property Name="durm" Type="Boolean" />
+          <NavigationProperty Name="TBL_KAYNAKLAR" Relationship="Self.FK_TBL_ODUNC_TBL_KAYNAKLAR" FromRole="TBL_ODUNC" ToRole="TBL_KAYNAKLAR" />
+          <NavigationProperty Name="TBL_UYELER" Relationship="Self.FK_TBL_ODUNC_TBL_UYELER" FromRole="TBL_ODUNC" ToRole="TBL_UYELER" />
+        </EntityType>
+        <EntityType Name="TBL_PERSONELLER">
+          <Key>
+            <PropertyRef Name="personel_id" />
+          </Key>
+          <Property Name="personel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="personel_ad" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="personel_soyad" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="personel_TC" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="personel_tel" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="personel_mail" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="personel_kullanıciad" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="personel_sifre" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="personel_foto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="personel_adres" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBL_UYELER">
+          <Key>
+            <PropertyRef Name="uye_id" />
+          </Key>
+          <Property Name="uye_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uye_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uye_soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uye_TC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="uye_tel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="uye_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uye_adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uye_ceza" Type="Double" />
+          <Property Name="uye_cinsiyet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="uye_dTarihi" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TBL_ODUNC" Relationship="Self.FK_TBL_ODUNC_TBL_UYELER" FromRole="TBL_UYELER" ToRole="TBL_ODUNC" />
+        </EntityType>
+        <Association Name="FK_TBL_ODUNC_TBL_KAYNAKLAR">
+          <End Role="TBL_KAYNAKLAR" Type="Self.TBL_KAYNAKLAR" Multiplicity="0..1" />
+          <End Role="TBL_ODUNC" Type="Self.TBL_ODUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_KAYNAKLAR">
+              <PropertyRef Name="kaynak_id" />
+            </Principal>
+            <Dependent Role="TBL_ODUNC">
+              <PropertyRef Name="kitap_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_ODUNC_TBL_UYELER">
+          <End Role="TBL_UYELER" Type="Self.TBL_UYELER" Multiplicity="0..1" />
+          <End Role="TBL_ODUNC" Type="Self.TBL_ODUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UYELER">
+              <PropertyRef Name="uye_id" />
+            </Principal>
+            <Dependent Role="TBL_ODUNC">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbKutuphaneEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TBL_KAYNAKLAR" EntityType="Self.TBL_KAYNAKLAR" />
+          <EntitySet Name="TBL_ODUNC" EntityType="Self.TBL_ODUNC" />
+          <EntitySet Name="TBL_PERSONELLER" EntityType="Self.TBL_PERSONELLER" />
+          <EntitySet Name="TBL_UYELER" EntityType="Self.TBL_UYELER" />
+          <AssociationSet Name="FK_TBL_ODUNC_TBL_KAYNAKLAR" Association="Self.FK_TBL_ODUNC_TBL_KAYNAKLAR">
+            <End Role="TBL_KAYNAKLAR" EntitySet="TBL_KAYNAKLAR" />
+            <End Role="TBL_ODUNC" EntitySet="TBL_ODUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_ODUNC_TBL_UYELER" Association="Self.FK_TBL_ODUNC_TBL_UYELER">
+            <End Role="TBL_UYELER" EntitySet="TBL_UYELER" />
+            <End Role="TBL_ODUNC" EntitySet="TBL_ODUNC" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dboLibraryOtomasyonModelStoreContainer" CdmEntityContainer="DbKutuphaneEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbo.LibraryOtomasyonModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_KAYNAKLAR">
+            <EntityTypeMapping TypeName="dbo.LibraryOtomasyonModel.TBL_KAYNAKLAR">
+              <MappingFragment StoreEntitySet="TBL_KAYNAKLAR">
+                <ScalarProperty Name="kaynak_id" ColumnName="kaynak_id" />
+                <ScalarProperty Name="kaynak_isbn" ColumnName="kaynak_isbn" />
+                <ScalarProperty Name="kaynak_ad" ColumnName="kaynak_ad" />
+                <ScalarProperty Name="kaynak_yazar" ColumnName="kaynak_yazar" />
+                <ScalarProperty Name="kaynak_yayinevi" ColumnName="kaynak_yayinevi" />
+                <ScalarProperty Name="kaynak_basımtarihi" ColumnName="kaynak_basımtarihi" />
+                <ScalarProperty Name="kaynak_sayfa" ColumnName="kaynak_sayfa" />
+                <ScalarProperty Name="kaynak_tur" ColumnName="kaynak_tur" />
+                <ScalarProperty Name="kaynak_ulke" ColumnName="kaynak_ulke" />
+                <ScalarProperty Name="kaynak_dil" ColumnName="kaynak_dil" />
+                <ScalarProperty Name="kaynak_adet" ColumnName="kaynak_adet" />
+                <ScalarProperty Name="kaynak_raf" ColumnName="kaynak_raf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_ODUNC">
+            <EntityTypeMapping TypeName="dbo.LibraryOtomasyonModel.TBL_ODUNC">
+              <MappingFragment StoreEntitySet="TBL_ODUNC">
+                <ScalarProperty Name="odunc_id" ColumnName="odunc_id" />
+                <ScalarProperty Name="kitap_id" ColumnName="kitap_id" />
+                <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+                <ScalarProperty Name="alis_tarih" ColumnName="alis_tarih" />
+                <ScalarProperty Name="veris_tarih" ColumnName="veris_tarih" />
+                <ScalarProperty Name="durm" ColumnName="durm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_PERSONELLER">
+            <EntityTypeMapping TypeName="dbo.LibraryOtomasyonModel.TBL_PERSONELLER">
+              <MappingFragment StoreEntitySet="TBL_PERSONELLER">
+                <ScalarProperty Name="personel_id" ColumnName="personel_id" />
+                <ScalarProperty Name="personel_ad" ColumnName="personel_ad" />
+                <ScalarProperty Name="personel_soyad" ColumnName="personel_soyad" />
+                <ScalarProperty Name="personel_TC" ColumnName="personel_TC" />
+                <ScalarProperty Name="personel_tel" ColumnName="personel_tel" />
+                <ScalarProperty Name="personel_mail" ColumnName="personel_mail" />
+                <ScalarProperty Name="personel_kullanıciad" ColumnName="personel_kullanıciad" />
+                <ScalarProperty Name="personel_sifre" ColumnName="personel_sifre" />
+                <ScalarProperty Name="personel_foto" ColumnName="personel_foto" />
+                <ScalarProperty Name="personel_adres" ColumnName="personel_adres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_UYELER">
+            <EntityTypeMapping TypeName="dbo.LibraryOtomasyonModel.TBL_UYELER">
+              <MappingFragment StoreEntitySet="TBL_UYELER">
+                <ScalarProperty Name="uye_id" ColumnName="uye_id" />
+                <ScalarProperty Name="uye_ad" ColumnName="uye_ad" />
+                <ScalarProperty Name="uye_soyad" ColumnName="uye_soyad" />
+                <ScalarProperty Name="uye_TC" ColumnName="uye_TC" />
+                <ScalarProperty Name="uye_tel" ColumnName="uye_tel" />
+                <ScalarProperty Name="uye_mail" ColumnName="uye_mail" />
+                <ScalarProperty Name="uye_adres" ColumnName="uye_adres" />
+                <ScalarProperty Name="uye_ceza" ColumnName="uye_ceza" />
+                <ScalarProperty Name="uye_cinsiyet" ColumnName="uye_cinsiyet" />
+                <ScalarProperty Name="uye_dTarihi" ColumnName="uye_dTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
